@@ -1,100 +1,69 @@
 def smart_calculator():
-    """
-    دالة الآلة الحاسبة الذكية التي تسمح بإجراء عمليات متعددة.
-    """
-    print("✨ أهلاً بك في الآلة الحاسبة الذكية! ✨")
+    print("--- Smart Calculator ---")
 
     while True:
         try:
-            # 1. طلب إدخال الرقمين (تم التعديل لتحسين عرض النص العربي)
-            print("\nالرجاء إدخال الرقم الأول (num1): ", end="")
-            num1 = float(input())
-            
-            print("الرجاء إدخال الرقم الثاني (num2): ", end="")
-            num2 = float(input())
+            # 1. Input numbers
+            num1 = float(input("\nEnter first number: "))
+            num2 = float(input("Enter second number: "))
 
-            # 2. طلب اختيار العملية
-            print("\nالرجاء اختيار العملية المطلوبة:")
-            print("  (+) للجمع")
-            print("  (-) للطرح")
-            print("  (*) للضرب")
-            print("  (/) للقسمة")
-            print("  (^) للأس (num1 ** num2)")
-            
-            # (تم التعديل لتحسين عرض النص العربي)
-            print("أدخل رمز العملية (+, -, *, /, ^): ", end="")
-            operation = input()
-            
+            # 2. Choose operation
+            print("Select Operation: (+, -, *, /, ^)")
+            op = input("Enter symbol: ")
+
             result = None
-            
-            # 3. تحديد العملية باستخدام عبارات if / elif / else
-            if operation == '+':
+
+            # 3. Calculation Logic
+            if op == '+':
                 result = num1 + num2
-            elif operation == '-':
+            elif op == '-':
                 result = num1 - num2
-            elif operation == '*':
+            elif op == '*':
                 result = num1 * num2
-            elif operation == '/':
-                if num2 != 0:
-                    result = num1 / num2
-                else:
-                    # معالجة حالة القسمة على صفر
-                    print("⚠️ خطأ: لا يمكن القسمة على صفر!")
-                    continue  # العودة لبداية الحلقة
-            elif operation == '^':
-                # الفكرة الإضافية: عملية الأس
+            elif op == '/':
+                if num2 == 0:
+                    print("Error: Cannot divide by zero!")
+                    continue
+                result = num1 / num2
+            elif op == '^':
                 result = num1 ** num2
             else:
-                print("❌ عملية غير صالحة. الرجاء المحاولة مرة أخرى.")
-                continue  # العودة لبداية الحلقة
+                print("Invalid operation. Please try again.")
+                continue
 
-            # عرض الناتج
-            print(f"\n✅ النتيجة: {num1} {operation} {num2} = **{result}**")
+            # Display Result
+            print(f"\nResult: {num1} {op} {num2} = {result}")
+
+            # --- Extra Analysis ---
             
-            # --- الإضافات المتقدمة ---
-
-            # 4. مقارنة الرقمين لتوضيح العلاقة
-            print("\n=== تحليل العلاقة بين الرقمين ===")
+            # Compare numbers
+            print("\n--- Analysis ---")
             if num1 > num2:
-                print(f"الرقم الأول ({num1}) **أكبر** من الرقم الثاني ({num2}).")
+                print(f"First number ({num1}) is greater than second number ({num2}).")
             elif num1 < num2:
-                print(f"الرقم الأول ({num1}) **أصغر** من الرقم الثاني ({num2}).")
+                print(f"First number ({num1}) is smaller than second number ({num2}).")
             else:
-                print(f"الرقم الأول ({num1}) **يساوي** الرقم الثاني ({num2}).")
+                print("Both numbers are equal.")
 
-            # شرط التحقق من كون الأرقام سالبة أو موجبة
-            print("\n=== تحليل الإشارة ===")
-            
-            # دالة مساعدة لتحديد إشارة الرقم
-            def get_sign(num):
-                if num > 0:
-                    return "موجب (+)"
-                elif num < 0:
-                    return "سالب (-)"
-                else:
-                    return "صفر"
+            # Check signs (Positive/Negative)
+            def check_sign(n):
+                if n > 0: return "Positive"
+                elif n < 0: return "Negative"
+                else: return "Zero"
 
-            print(f"الرقم الأول ({num1}) هو رقم: **{get_sign(num1)}**")
-            print(f"الرقم الثاني ({num2}) هو رقم: **{get_sign(num2)}**")
+            print(f"Number 1 is {check_sign(num1)}")
+            print(f"Number 2 is {check_sign(num2)}")
 
         except ValueError:
-            print("🚫 إدخال غير صالح. الرجاء إدخال أرقام حقيقية فقط.")
-            continue # تخطي التكرار الحالي والبدء من جديد
-        except Exception as e:
-            print(f"حدث خطأ غير متوقع: {e}")
-            
-        # خيار إعادة العملية (تم التعديل لتحسين عرض النص العربي)
-        while True:
-            print("\nهل تريد إجراء عملية أخرى؟ (نعم/لا): ", end="")
-            choice = input().lower()
-            if choice in ['لا', 'n', 'no']:
-                print("\nشكراً لاستخدام الآلة الحاسبة الذكية. إلى اللقاء! 👋")
-                return # إنهاء الدالة والحلقة
-            elif choice in ['نعم', 'y', 'yes']:
-                break # الخروج من حلقة الخيار والعودة لبداية حلقة الـ while الرئيسية
-            else:
-                print("إجابة غير صالحة. الرجاء الإجابة بـ 'نعم' أو 'لا'.")
+            print("Invalid input. Please enter numbers only.")
+        except Exception:
+            print("Something went wrong.")
 
-# تشغيل البرنامج
+        # Ask to continue
+        again = input("\nDo you want to calculate again? (yes/no): ")
+        if again.lower() not in ['yes', 'y']:
+            print("Goodbye! 👋")
+            break
+
 if __name__ == "__main__":
     smart_calculator()
